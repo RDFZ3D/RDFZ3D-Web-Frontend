@@ -1,66 +1,59 @@
-<!--suppress JSUnresolvedReference -->
 <script lang="ts">
     import {superForm} from "sveltekit-superforms/client";
-    import {Icon} from "@smui/common";
-    import Button from "@smui/button";
-    import Paper from "@smui/paper";
-    import Textfield from "@smui/textfield";
-    import CharacterCounter from "@smui/textfield/character-counter";
-    import HelperText from "@smui/textfield/helper-text";
-    import TextfieldIcon from "@smui/textfield/icon"
-    import {mdiAccount, mdiEmail, mdiLock, mdiPhone} from "@mdi/js";
+    import {zod} from "sveltekit-superforms/adapters";
 
     import * as utils from "$lib/utils";
     import LL from "$i18n/i18n-svelte";
-    import type {RegisterSchemaKey} from "$lib/server/user/schema";
+    import {registerSchema, type RegisterSchemaKey} from "$lib/schemas/user/register";
 
     let {data} = $props();
 
-    const {form, errors, constraints, enhance} = superForm(data.form);
+    const {form, errors, constraints, message, enhance} = superForm(data.form, {
+            validators: zod(registerSchema),
+        }
+    );
+
+    const fields: { fieldKey: RegisterSchemaKey, [key: string]: any }[] = [
+        {fieldKey: "username"},
+        {fieldKey: "email"},
+        {fieldKey: "phone_no"},
+        {fieldKey: "password"},
+        {fieldKey: "confirm_password"},
+    ]
 </script>
 
-{#snippet formTextfield(fieldKey: RegisterSchemaKey, iconSvg: string)}
-  <div>
-    <!--suppress JSUnusedGlobalSymbols -->
-    <Textfield
-        value={$form[fieldKey] || ""}
-        input$name={fieldKey}
-        input$emptyValueNull
-        type={fieldKey === "password" || fieldKey === "confirm_password" ? "password" : "text"}
-        label={$LL.user[fieldKey]()}
-        class="w-full"
-        invalid={!!$errors[fieldKey]}
-        {...utils.prefixKeys($constraints[fieldKey], "input$")}
-    >
-      {#snippet leadingIcon()}
-        <TextfieldIcon class="material-icons">
-          <Icon tag="svg" viewBox="0 0 24 24" width="24" height="24">
-            <path fill="currentColor" d={iconSvg} />
-          </Icon>
-        </TextfieldIcon>
-      {/snippet}
-      {#snippet helper()}
-        <HelperText persistent validationMsg={!!$errors[fieldKey]}>{$errors[fieldKey] || ($constraints[fieldKey]?.required ? "" : $LL.common.optional())}</HelperText>
-        {#if ($constraints[fieldKey]?.maxlength)}
-          <CharacterCounter>0 / {$constraints[fieldKey].maxlength}</CharacterCounter>
+<form method="POST" use:enhance class="flex items-center justify-center my-6">
+  <fieldset class="fieldset w-xs bg-base-200 p-4 rounded-box">
+    <legend class="fieldset-legend">{$LL.user.functions.login.title()}</legend>
+
+    {#each fields as field}
+      <label class="fieldset-label" for="input-{field.fieldKey}">
+        {$LL.user[field.fieldKey]()}
+        {($constraints[field.fieldKey]?.required ? "*" : `(${$LL.common.optional()})`)}
+      </label>
+      <input class='input {$errors[field.fieldKey] ? "input-error" : ""}'
+             id="input-{field.fieldKey}"
+             name={field.fieldKey}
+             type={field.fieldKey === "password" || field.fieldKey === "confirm_password" ? "password" : "text"}
+             bind:value={$form[field.fieldKey]}
+             placeholder={$LL.user[field.fieldKey]()}
+      />
+      <p class='fieldset-label {$errors[field.fieldKey] ? "text-error" : ""}'>
+        {#if $errors[field.fieldKey]}
+          {#each ($errors[field.fieldKey] || []) as error} <!-- “|| []” 用于规避 svelte 语言服务器的报错 -->
+            {utils.getValidationTranslatedStringByKey($LL, error, field.fieldKey, "user")}<br />
+          {/each}
+        {:else}
+          &nbsp;
         {/if}
-      {/snippet}
-    </Textfield>
-  </div>
-{/snippet}
-
-<div class="flex items-center justify-center mt-6 mb-6">
-  <Paper class="w-full max-w-md p-8" elevation={4}>
-    <h1 class="mb-6 text-2xl font-bold text-center">{$LL.user.functions.register.title()}</h1>
-
-    <form method="POST" use:enhance class="space-y-6">
-      {@render formTextfield("username", mdiAccount)}
-      {@render formTextfield("email", mdiEmail)}
-      {@render formTextfield("phone_no", mdiPhone)}
-      {@render formTextfield("password", mdiLock)}
-      {@render formTextfield("confirm_password", mdiLock)}
-
-      <Button variant="raised" class="w-full" type="submit">{$LL.user.functions.register.submit()}</Button>
-    </form>
-  </Paper>
-</div>
+      </p>
+    {/each}
+    <p class="fieldset-label text-error">
+      {#if $message}
+        {utils.getValidationTranslatedStringByKey($LL, $message, undefined, "user")}
+      {/if}
+    </p>
+    <button type="submit" class="btn btn-neutral mt-4">{$LL.user.functions.register.title()}</button>
+    <a class="link text-right" href="login">{$LL.user.functions.register.links.login()}</a>
+  </fieldset>
+</form>

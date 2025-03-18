@@ -1,26 +1,35 @@
 import {raiseError} from "$lib/server/errors";
 import {API_HOST} from "$env/static/private";
+import axios from "axios";
 
-/**
- * A wrapper for fetch that raises an error if the response is not ok
- * @param route
- * @param method
- * @param token
- * @param body
- */
-export const request = async (route: string, method: string, token?: string, body?: any) => {
-    const response = await fetch(`${API_HOST}${route}`, {
-        method: method,
-        headers: {
-            'Content-Type': 'application/json',
-            ...(token ? {'Authorization': `Bearer ${token}`} : {})
-        },
-        body: body,
-    });
-    console.log(route, response)
-    const result = await response.json();
-    if (!response.ok) {
-        raiseError(response.status, result.detail);
+
+const axiosInstance = axios.create({
+    baseURL: API_HOST,
+    timeout: 1500,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
+
+
+export const requestWrapped = async (route: string, method: string, token?: string, body?: any) => {
+    try {
+        const response = await axiosInstance.request({
+            url: route,
+            method: method,
+            headers: {
+                ...(token ? {'Authorization': `Bearer ${token}`} : {})
+            },
+            data: body,
+        })
+        console.log(route, response)
+        return response;
+    } catch (e) {
+        if (!(e instanceof axios.AxiosError)) {throw e;}
+        if (e.response) {
+            raiseError(e.response.status, e.response.data.detail);
+        }
+        throw e;
     }
-    return {response, result};
-};
+}
+

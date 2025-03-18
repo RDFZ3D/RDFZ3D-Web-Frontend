@@ -1,5 +1,5 @@
-import type {FullUserSchema} from "$lib/server/user/schema";
+import type {UserFullSchema} from "$lib/schemas/user/user";
 
-export interface User extends FullUserSchema {
+export interface User extends UserFullSchema {
     id: string,
 }

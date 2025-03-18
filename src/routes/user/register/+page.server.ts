@@ -1,42 +1,52 @@
-import {type Actions, fail} from '@sveltejs/kit';
-import {setError, superValidate} from 'sveltekit-superforms/server';
+import {type Actions, fail, redirect, type RequestEvent} from '@sveltejs/kit';
+import {message, setError, superValidate} from 'sveltekit-superforms/server';
 import {zod} from "sveltekit-superforms/adapters";
+import {AxiosError} from "axios";
 import type {PageServerLoad} from "./$types";
 import type {TranslationFunctions} from "$i18n/i18n-types";
 
-import {createRegisterSchema, type RegisterSchemaKey} from "$lib/server/user/schema";
-import {CommonErrorWithStatus, ValidationError} from "$lib/server/errors"
-import {registerUser} from "$lib/server/user/functions";
+import {CommonErrorWithStatus, ServerError, ValidationError} from "$lib/server/errors"
+import {registerSchema, type RegisterSchemaKey} from "$lib/schemas/user/register";
+import {loginUser, registerUser} from "$lib/server/user/functions";
 
-let registerSchema: ReturnType<typeof createRegisterSchema>;
+
 let LL: TranslationFunctions;
 
-export const load: PageServerLoad = async ({locals: {LL: _LL}}) => {
-    LL = _LL;
-    registerSchema = createRegisterSchema(LL);
+export const load: PageServerLoad = async (event: RequestEvent) => {
+    if (event.locals.session !== null && event.locals.user !== null) {
+        throw redirect(302, `/user/${event.locals.user.id}`);
+    }
+    LL = event.locals.LL;
     const form = await superValidate(zod(registerSchema));
     return {form};
 };
 
 export const actions: Actions = {
-    default: async ({request}) => {
-        const form = await superValidate(request, zod(registerSchema));
+    default: async (event) => {
+        const form = await superValidate(event.request, zod(registerSchema));
         if (!form.valid) {
             return fail(400, {form});
         }
 
         try {
-            form.data = await registerUser(form.data);
-            return {form};
+            Object.assign(form.data, await registerUser(form.data));
         } catch (e: any) {
+            if (e instanceof AxiosError) {
+                if (e.code === "ECONNREFUSED") {
+                    return message(form, LL.common.errors.server({message: "ECONNREFUSED"}), {status: 500});
+                }
+            }
+            if (e instanceof ServerError) {
+                return message(form, LL.common.errors.server({message: e.status.toString()}), {status: 500});
+            }
             if (e instanceof CommonErrorWithStatus && e.status === 400 && e.detail?.code === "USER_ALREADY_EXISTS") {
-                return setError(form, e.detail.identifier as RegisterSchemaKey,
-                    LL.user.validations.user_exists({field: LL.user[e.detail.identifier as RegisterSchemaKey]()}));
+                return setError(form, e.detail.identifier as RegisterSchemaKey, "|:user_exists");
             } else if (e instanceof ValidationError && e.detail[0].loc[1] === "phone_no") {
-                return setError(form, "phone_no",
-                    LL.common.validations.field_invalid({field: LL.user.phone_no()}));
+                return setError(form, "phone_no", "|:field_invalid");
             }
             return fail(e.status, {form});
         }
+        await loginUser(form.data, event);
+        return {form};
     }
 };

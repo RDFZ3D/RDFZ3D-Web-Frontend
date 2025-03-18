@@ -17,8 +17,11 @@
 	"devDependencies": {
 		"@mdi/js": "^7.4.47",
 		"@smui/button": "^8.0.0-beta.3",
+		"@smui/drawer": "^8.0.0-beta.3",
 		"@smui/form-field": "^8.0.0-beta.3",
 		"@smui/icon-button": "^8.0.0-beta.3",
+		"@smui/menu": "^8.0.0-beta.3",
+		"@smui/menu-surface": "^8.0.0-beta.3",
 		"@smui/paper": "^8.0.0-beta.3",
 		"@smui/textfield": "^8.0.0-beta.3",
 		"@smui/top-app-bar": "^8.0.0-beta.3",
@@ -26,6 +29,8 @@
 		"@sveltejs/kit": "^2.16.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"@tailwindcss/vite": "^4.0.0",
+		"axios": "^1.8.3",
+		"daisyui": "^5.0.0",
 		"smui-theme": "^8.0.0-beta.3",
 		"svelte": "^5.0.0",
 		"svelte-check": "^4.0.0",
@@ -36,6 +41,7 @@
 		"zod": "^3.24.2"
 	},
 	"dependencies": {
+		"theme-change": "^2.5.0",
 		"typesafe-i18n": "^5.26.2"
 	}
 }

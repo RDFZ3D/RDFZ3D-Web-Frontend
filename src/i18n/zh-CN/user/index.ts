@@ -9,16 +9,27 @@ const zh_CN_user = {
     nickname: "昵称",
     functions: {
         register: {
-            title: "用户注册",
+            title: "注册",
             submit: "注册",
             success: "注册成功",
             error: "注册失败",
+            links: {
+                login: "登录已有账号",
+            }
         },
         login: {
-            title: "用户登录",
+            title: "登录",
             submit: "登录",
             success: "登录成功",
             error: "登录失败",
+            links: {
+                register: "注册新账号",
+            }
+        },
+        logout: {
+            title: "登出",
+            success: "登出成功",
+            error: "登出失败",
         },
     },
     validations: {

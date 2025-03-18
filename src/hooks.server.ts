@@ -1,6 +1,4 @@
 import type {Handle, RequestEvent} from '@sveltejs/kit';
-import {loadLocaleAsync} from '$i18n/i18n-util.async';
-import {setLocale} from '$i18n/i18n-svelte';
 import {detectLocale, i18n} from '$i18n/i18n-util';
 import {initAcceptLanguageHeaderDetector} from 'typesafe-i18n/detectors';
 import {loadAllLocales} from "$i18n/i18n-util.sync";
@@ -25,7 +23,7 @@ const getPreferredLocale = ({request}: RequestEvent) => {
 const i18nHandle: Handle = async ({event, resolve}) => {
     const locale = getPreferredLocale(event);
     const LL = L[locale];
-    // bind locale and translation functions to current request
+    // bind locale and translation functions to current requestWrapped
     event.locals.locale = locale;
     event.locals.LL = LL;
 

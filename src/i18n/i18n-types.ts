@@ -19,10 +19,27 @@ export type Translations = RootTranslation &
 type RootTranslation = {
 	common: {
 		/**
+		 * 返​回
+		 */
+		back: string
+		/**
+		 * 确​认
+		 */
+		confirm: string
+		/**
+		 * 取​消
+		 */
+		cancel: string
+		/**
 		 * 可​选
 		 */
 		optional: string
 		validations: {
+			/**
+			 * {​f​i​e​l​d​|​l​o​w​e​r​c​a​s​e​}​不​能​为​空
+			 * @param {string} field
+			 */
+			required: RequiredParams<'field|lowercase'>
 			/**
 			 * {​f​i​e​l​d​|​l​o​w​e​r​c​a​s​e​}​至​多​有​ ​{​m​a​x​_​l​e​n​g​t​h​}​ ​个​字​符
 			 * @param {string} field
@@ -40,6 +57,30 @@ type RootTranslation = {
 			 * @param {string} field
 			 */
 			field_invalid: RequiredParams<'field|lowercase'>
+			/**
+			 * {​f​i​e​l​d​|​l​o​w​e​r​c​a​s​e​}​只​能​包​含​字​母​、​数​字​和​常​用​符​号
+			 * @param {string} field
+			 */
+			ascii_only: RequiredParams<'field|lowercase'>
+			/**
+			 * {​f​i​e​l​d​|​l​o​w​e​r​c​a​s​e​}​只​能​包​含​字​母​、​数​字​和​下​划​线
+			 * @param {string} field
+			 */
+			var_name_only: RequiredParams<'field|lowercase'>
+		}
+		errors: {
+			/**
+			 * 异​常​:​ ​{​m​e​s​s​a​g​e​}​。​
+		​如​果​频​繁​出​错​，​请​在​ ​G​i​t​e​e​ ​或​ ​G​i​t​H​u​b​ ​提​交​ ​I​s​s​u​e​。
+			 * @param {string} message
+			 */
+			unhandled: RequiredParams<'message'>
+			/**
+			 * 服​务​器​错​误​：​{​m​e​s​s​a​g​e​}​。​
+		​如​果​频​繁​出​错​，​请​在​ ​G​i​t​e​e​ ​或​ ​G​i​t​H​u​b​ ​提​交​ ​I​s​s​u​e​。
+			 * @param {string} message
+			 */
+			server: RequiredParams<'message'>
 		}
 	}
 }
@@ -72,7 +113,7 @@ export type NamespaceUserTranslation = {
 	functions: {
 		register: {
 			/**
-			 * 用​户​注​册
+			 * 注​册
 			 */
 			title: string
 			/**
@@ -87,10 +128,16 @@ export type NamespaceUserTranslation = {
 			 * 注​册​失​败
 			 */
 			error: string
+			links: {
+				/**
+				 * 登​录​已​有​账​号
+				 */
+				login: string
+			}
 		}
 		login: {
 			/**
-			 * 用​户​登​录
+			 * 登​录
 			 */
 			title: string
 			/**
@@ -103,6 +150,26 @@ export type NamespaceUserTranslation = {
 			success: string
 			/**
 			 * 登​录​失​败
+			 */
+			error: string
+			links: {
+				/**
+				 * 注​册​新​账​号
+				 */
+				register: string
+			}
+		}
+		logout: {
+			/**
+			 * 登​出
+			 */
+			title: string
+			/**
+			 * 登​出​成​功
+			 */
+			success: string
+			/**
+			 * 登​出​失​败
 			 */
 			error: string
 		}
@@ -142,10 +209,26 @@ type DisallowNamespaces = {
 export type TranslationFunctions = {
 	common: {
 		/**
+		 * 返回
+		 */
+		back: () => LocalizedString
+		/**
+		 * 确认
+		 */
+		confirm: () => LocalizedString
+		/**
+		 * 取消
+		 */
+		cancel: () => LocalizedString
+		/**
 		 * 可选
 		 */
 		optional: () => LocalizedString
 		validations: {
+			/**
+			 * {field|lowercase}不能为空
+			 */
+			required: (arg: { field: string }) => LocalizedString
 			/**
 			 * {field|lowercase}至多有 {max_length} 个字符
 			 */
@@ -158,6 +241,26 @@ export type TranslationFunctions = {
 			 * {field|lowercase}无效
 			 */
 			field_invalid: (arg: { field: string }) => LocalizedString
+			/**
+			 * {field|lowercase}只能包含字母、数字和常用符号
+			 */
+			ascii_only: (arg: { field: string }) => LocalizedString
+			/**
+			 * {field|lowercase}只能包含字母、数字和下划线
+			 */
+			var_name_only: (arg: { field: string }) => LocalizedString
+		}
+		errors: {
+			/**
+			 * 异常: {message}。
+		如果频繁出错，请在 Gitee 或 GitHub 提交 Issue。
+			 */
+			unhandled: (arg: { message: string }) => LocalizedString
+			/**
+			 * 服务器错误：{message}。
+		如果频繁出错，请在 Gitee 或 GitHub 提交 Issue。
+			 */
+			server: (arg: { message: string }) => LocalizedString
 		}
 	}
 	user: {
@@ -188,7 +291,7 @@ export type TranslationFunctions = {
 		functions: {
 			register: {
 				/**
-				 * 用户注册
+				 * 注册
 				 */
 				title: () => LocalizedString
 				/**
@@ -203,10 +306,16 @@ export type TranslationFunctions = {
 				 * 注册失败
 				 */
 				error: () => LocalizedString
+				links: {
+					/**
+					 * 登录已有账号
+					 */
+					login: () => LocalizedString
+				}
 			}
 			login: {
 				/**
-				 * 用户登录
+				 * 登录
 				 */
 				title: () => LocalizedString
 				/**
@@ -219,6 +328,26 @@ export type TranslationFunctions = {
 				success: () => LocalizedString
 				/**
 				 * 登录失败
+				 */
+				error: () => LocalizedString
+				links: {
+					/**
+					 * 注册新账号
+					 */
+					register: () => LocalizedString
+				}
+			}
+			logout: {
+				/**
+				 * 登出
+				 */
+				title: () => LocalizedString
+				/**
+				 * 登出成功
+				 */
+				success: () => LocalizedString
+				/**
+				 * 登出失败
 				 */
 				error: () => LocalizedString
 			}

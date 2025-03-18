@@ -1,4 +1,4 @@
-import type { NamespaceUserTranslation } from '../../i18n-types'
+import type {NamespaceUserTranslation} from '../../i18n-types'
 
 const en_user = {
     username: "Username",
@@ -13,12 +13,23 @@ const en_user = {
             submit: "Register",
             success: "Registration successful",
             error: "Registration failed",
+            links: {
+                login: "Login to an existing account"
+            }
         },
         login: {
             title: "Login",
             submit: "Login",
             success: "Login successful",
             error: "Login failed",
+            links: {
+                register: "Register a new account"
+            }
+        },
+        logout: {
+            title: "Logout",
+            success: "Logout successful",
+            error: "Logout failed",
         },
     },
     validations: {
