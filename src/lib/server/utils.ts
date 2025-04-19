@@ -1,6 +1,8 @@
-import { raiseError } from "$lib/server/errors";
+import { raiseError, ServerError } from "$lib/server/errors";
 import { API_HOST } from "$env/static/private";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import type { TranslationFunctions } from "$i18n/i18n-types";
+import { message } from "sveltekit-superforms/server";
 
 const axiosInstance = axios.create({
   baseURL: API_HOST,
@@ -20,7 +22,7 @@ export const requestWrapped = async (route: string, method: string, token?: stri
       },
       data: body,
     });
-    console.log(route, response);
+    // console.log(route, response);
     return response;
   } catch (e) {
     if (!(e instanceof axios.AxiosError)) {
@@ -31,4 +33,20 @@ export const requestWrapped = async (route: string, method: string, token?: stri
     }
     throw e;
   }
+};
+
+export const returnMessageIfServerError = (e: any, LL: TranslationFunctions, form: any) => {
+  if (e instanceof AxiosError) {
+    if (e.code === "ECONNREFUSED") {
+      return message(form, LL.common.errors.server({ message: "ECONNREFUSED" }), {
+        status: 500,
+      });
+    }
+  }
+  if (e instanceof ServerError) {
+    return message(form, LL.common.errors.server({ message: e.status.toString() }), {
+      status: 500,
+    });
+  }
+  return null;
 };

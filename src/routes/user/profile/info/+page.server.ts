@@ -8,6 +8,7 @@ import type { TranslationFunctions } from "$i18n/i18n-types";
 import { CommonErrorWithStatus, ServerError, ValidationError } from "$lib/server/errors";
 import { userFullSchema, type UserFullSchemaKey } from "$lib/schemas/user/user";
 import { patchMe } from "$lib/server/user/functions";
+import { returnMessageIfServerError } from "$lib/server/utils";
 
 let LL: TranslationFunctions;
 
@@ -27,18 +28,8 @@ export const actions: Actions = {
     try {
       Object.assign(form.data, await patchMe(form.data, event));
     } catch (e: any) {
-      if (e instanceof AxiosError) {
-        if (e.code === "ECONNREFUSED") {
-          return message(form, LL.common.errors.server({ message: "ECONNREFUSED" }), {
-            status: 500,
-          });
-        }
-      }
-      if (e instanceof ServerError) {
-        return message(form, LL.common.errors.server({ message: e.status.toString() }), {
-          status: 500,
-        });
-      }
+      const serverErrorMsg = returnMessageIfServerError(e, LL, form);
+      if (serverErrorMsg) return serverErrorMsg;
       if (
         e instanceof CommonErrorWithStatus &&
         e.status === 400 &&

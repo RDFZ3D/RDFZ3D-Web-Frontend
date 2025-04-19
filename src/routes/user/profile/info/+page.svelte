@@ -5,19 +5,25 @@
 
   import * as utils from "$lib/utils";
   import LL from "$i18n/i18n-svelte";
-  import { userFullSchema, type UserFullSchemaKey } from "$lib/schemas/user/user";
+  import {
+    userFullSchema,
+    userWritableSchema,
+    type UserWritableSchemaKey,
+    type UserWritableSchema,
+  } from "$lib/schemas/user/user";
   import type { FormInfo } from "$lib/schemas/form";
 
   let { data } = $props();
 
-  const { form, errors, constraints, message, enhance } = superForm(data.form, {
+  const { form, errors, constraints, message, tainted, isTainted, enhance } = superForm(data.form, {
     validators: zod(userFullSchema),
+    resetForm: false,
   });
-  type ExcludePublicKeys<T extends string> = T extends `${infer Prefix}_public` ? never : T;
+  type ExcludePublicKeys<T extends string> = T extends `${infer _}_public` ? never : T;
 
   const fieldsets: FormInfo<
-    keyof TranslationFunctions["user"]["functions"]["profile"],
-    Exclude<ExcludePublicKeys<UserFullSchemaKey>, "avatar_path">
+    Exclude<keyof TranslationFunctions["user"]["functions"]["profile"], "title">,
+    Exclude<ExcludePublicKeys<UserWritableSchemaKey>, "avatar_path">
   > = [
     {
       title: "info",
@@ -34,6 +40,14 @@
       fields: [{ fieldKey: "username" }, { fieldKey: "email" }, { fieldKey: "phone_no" }],
     },
   ];
+
+  type BooleanKeys<T> = {
+    [K in keyof T]: T[K] extends boolean ? K : never;
+  }[keyof T];
+
+  const publicFieldKeyWorkaround = (fieldKey: UserWritableSchemaKey) => {
+    return `${fieldKey}_public` as BooleanKeys<UserWritableSchema>;
+  };
 </script>
 
 <form method="POST" use:enhance>
@@ -116,27 +130,43 @@
             placeholder={$LL.user[field.fieldKey]()}
           />
         {/if}
-        <p class="fieldset-label {$errors[field.fieldKey] ? 'text-error' : ''}">
-          {#if $errors[field.fieldKey]}
-            {#each $errors[field.fieldKey] || [] as error}
-              <!-- “|| []” 用于规避 svelte 语言服务器的报错 -->
-              {utils.getValidationTranslatedStringByKey($LL, error, field.fieldKey, "user")}<br />
-            {/each}
-          {:else}
-            &nbsp;
+        <div class="flex items-start gap-2">
+          <p class="fieldset-label flex-1 {$errors[field.fieldKey] ? 'text-error' : ''}">
+            {#if $errors[field.fieldKey]}
+              {#each $errors[field.fieldKey] || [] as error}
+                <!-- “|| []” 用于规避 svelte 语言服务器的报错 -->
+                {utils.getValidationTranslatedStringByKey($LL, error, field.fieldKey, "user")}<br />
+              {/each}
+            {:else if ($tainted === undefined || !isTainted($tainted[field.fieldKey])) && ((field.fieldKey === "email" && !$form.is_email_verified) || (field.fieldKey === "phone_no" && !$form.is_phone_verified))}
+              <span class="text-warning">{$LL.user[field.fieldKey]()}{$LL.user.unverified()}</span>
+            {:else}
+              &nbsp;
+            {/if}
+          </p>
+          {#if Object.keys(userWritableSchema.shape).includes(`${field.fieldKey}_public`)}
+            <label>
+              <input
+                type="checkbox"
+                class="checkbox"
+                id="{field.fieldKey}-public"
+                name="{field.fieldKey}_public"
+                bind:checked={$form[publicFieldKeyWorkaround(field.fieldKey)]}
+              />
+              {$LL.user.public()}
+            </label>
           {/if}
-        </p>
+        </div>
       {/each}
 
-      <!--      <p class="fieldset-label text-error">-->
-      <!--        {#if $message}-->
-      <!--          {utils.getValidationTranslatedStringByKey($LL, $message, undefined, "user")}-->
-      <!--        {/if}-->
-      <!--      </p>-->
       <!--      <button type="submit" class="btn btn-neutral mt-4">{$LL.user.functions.register.title()}</button>-->
       <!--      <a class="link text-right" href="login">{$LL.user.functions.register.links.login()}</a>-->
     </fieldset>
   {/each}
+  <p class="fieldset-label text-error">
+    {#if $message}
+      {utils.getValidationTranslatedStringByKey($LL, $message, undefined, "user")}
+    {/if}
+  </p>
   <button type="submit" class="btn btn-primary mb-6">{$LL.common.submit()}</button>
 </form>
 

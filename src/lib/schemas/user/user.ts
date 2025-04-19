@@ -34,7 +34,7 @@ export const userPublicSchema = z.object({
 export type UserPublicSchema = z.infer<typeof userPublicSchema>;
 export type UserPublicSchemaKey = keyof UserPublicSchema;
 
-export const userFullSchema = userPublicSchema.extend({
+export const userWritableSchema = userPublicSchema.extend({
   email_public: z.boolean(),
   phone_no_public: z.boolean(),
   is_superuser_public: z.boolean(),
@@ -42,6 +42,17 @@ export const userFullSchema = userPublicSchema.extend({
   gender_public: z.boolean(),
   birthday_public: z.boolean(),
   identity_public: z.boolean(),
+});
+
+export type UserWritableSchema = z.infer<typeof userWritableSchema>;
+export type UserWritableSchemaKey = keyof UserWritableSchema;
+
+export const userFullSchema = userWritableSchema.extend({
+  id: z.string(),
+  is_active: z.boolean(),
+  is_verified: z.boolean(),
+  is_email_verified: z.boolean(),
+  is_phone_verified: z.boolean(),
 });
 
 export type UserFullSchema = z.infer<typeof userFullSchema>;

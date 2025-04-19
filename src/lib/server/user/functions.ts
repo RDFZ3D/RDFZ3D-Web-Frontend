@@ -49,3 +49,16 @@ export const patchMe = async (form: Partial<UserFullSchema>, event: RequestEvent
   );
   return response.data as UserFullSchema;
 };
+
+export const changePassword = async (
+  form: { old_password: string; new_password: string },
+  event: RequestEvent,
+) => {
+  const response = await requestWrapped(
+    "/auth/change-password",
+    "POST",
+    event.locals.session?.access_token,
+    JSON.stringify(form),
+  );
+  return true;
+};

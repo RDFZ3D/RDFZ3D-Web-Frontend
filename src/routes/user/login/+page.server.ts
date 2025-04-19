@@ -7,6 +7,7 @@ import { loginSchema } from "$lib/schemas/user/login";
 import { loginUser } from "$lib/server/user/functions";
 import { CommonErrorWithStatus, ServerError } from "$lib/server/errors";
 import { AxiosError } from "axios";
+import { returnMessageIfServerError } from "$lib/server/utils";
 
 let LL: TranslationFunctions;
 
@@ -30,18 +31,8 @@ export const actions: Actions = {
       await loginUser(form.data, event);
       return { form };
     } catch (e: any) {
-      if (e instanceof AxiosError) {
-        if (e.code === "ECONNREFUSED") {
-          return message(form, LL.common.errors.server({ message: "ECONNREFUSED" }), {
-            status: 500,
-          });
-        }
-      }
-      if (e instanceof ServerError) {
-        return message(form, LL.common.errors.server({ message: e.status.toString() }), {
-          status: 500,
-        });
-      }
+      const serverErrorMsg = returnMessageIfServerError(e, LL, form);
+      if (serverErrorMsg) return serverErrorMsg;
       if (e instanceof CommonErrorWithStatus) {
         if (e.status === 400 && e.detail?.code === "LOGIN_BAD_CREDENTIALS") {
           return message(form, "|:bad_credentials", { status: 400 });

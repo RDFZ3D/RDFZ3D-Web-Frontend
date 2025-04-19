@@ -17,7 +17,7 @@ const zh_CN = {
       var_name_only: "{field:string|lowercase}只能包含字母、数字和下划线",
     },
     errors: {
-      unhandled: "异常: {message:string}。\n如果频繁出错，请在 Gitee 或 GitHub 提交 Issue。",
+      unhandled: "异常：{message:string}。\n如果频繁出错，请在 Gitee 或 GitHub 提交 Issue。",
       server: "服务器错误：{message:string}。\n如果频繁出错，请在 Gitee 或 GitHub 提交 Issue。",
     },
   },

@@ -79,3 +79,7 @@
     }
   }
 }
+
+@utility fieldset-legend {
+  @apply text-lg;
+}

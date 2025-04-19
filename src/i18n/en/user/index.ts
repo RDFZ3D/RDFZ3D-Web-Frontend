@@ -6,10 +6,17 @@ const en_user = {
   phone_no: "Phone number",
   password: "Password",
   confirm_password: "Confirm password",
+  old_password: "Old password",
+  new_password: "New password",
   nickname: "Nickname",
   avatar: "Avatar",
   real_name: "Real name",
   gender: "Gender",
+  verified: "Verified",
+  unverified: "Unverified",
+  active: "Active",
+  inactive: "Inactive",
+  public: "Public",
   genders: {
     female: "Female",
     male: "Male",
@@ -48,6 +55,10 @@ const en_user = {
       },
       auth_info: {
         title: "Authentication Information",
+        change_password: {
+          title: "Change Password",
+          submit: "Change password",
+        },
       },
     },
   },
@@ -55,6 +66,7 @@ const en_user = {
     user_exists: "Index with this {field|lowercase} already exists.",
     user_not_found: "Index not found.",
     password_mismatch: "Passwords do not match.",
+    password_incorrect: "Wrong password.",
     bad_credentials: "Wrong username or password.",
   },
 } satisfies NamespaceUserTranslation;

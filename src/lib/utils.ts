@@ -7,7 +7,7 @@ export const prefixKeys = (obj: Record<string, any> | undefined, prefix: string)
 };
 
 export const emptyAsNull = (value: any) => {
-  if (value === "" || value === null || value === undefined) return null;
+  if (value === "" || Number.isNaN(value) || value === null || value === undefined) return null;
   return value;
 };
 
