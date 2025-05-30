@@ -47,6 +47,10 @@ export const userWritableSchema = userPublicSchema.extend({
 export type UserWritableSchema = z.infer<typeof userWritableSchema>;
 export type UserWritableSchemaKey = keyof UserWritableSchema;
 
+export const userPatchSchema = userWritableSchema.partial();
+export type UserPatchSchema = z.infer<typeof userPatchSchema>;
+export type UserPatchSchemaKey = keyof UserPatchSchema;
+
 export const userFullSchema = userWritableSchema.extend({
   id: z.string(),
   is_active: z.boolean(),

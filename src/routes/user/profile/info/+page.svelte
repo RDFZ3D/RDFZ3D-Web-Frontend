@@ -119,6 +119,7 @@
             name={field.fieldKey}
             bind:value={$form[field.fieldKey]}
             placeholder={$LL.user[field.fieldKey]()}
+            aria-invalid={$errors[field.fieldKey] ? "true" : "false"}
           ></textarea>
         {:else}
           <input
@@ -128,6 +129,7 @@
             type={inputType}
             bind:value={$form[field.fieldKey]}
             placeholder={$LL.user[field.fieldKey]()}
+            aria-invalid={$errors[field.fieldKey] ? "true" : "false"}
           />
         {/if}
         <div class="flex items-start gap-2">

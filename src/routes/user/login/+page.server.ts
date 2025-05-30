@@ -13,7 +13,7 @@ let LL: TranslationFunctions;
 
 export const load: PageServerLoad = async (event: RequestEvent) => {
   if (event.locals.session !== null && event.locals.user !== null) {
-    throw redirect(302, `/user/${event.locals.user.id}`);
+    throw redirect(302, `/user/profile/info`);
   }
   LL = event.locals.LL;
   const form = await superValidate(zod(loginSchema));
