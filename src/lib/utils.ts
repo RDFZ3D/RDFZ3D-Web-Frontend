@@ -60,6 +60,7 @@ export const getValidationTranslatedStringByKey = <TNamespace extends keyof Tran
   let translationFunction: (...args: any[]) => LocalizedString;
   if (realKey in LL.common.validations) {
     translationFunction = LL.common.validations[realKey as keyof typeof LL.common.validations];
+    // @ts-ignore
   } else if (namespace in LL && realKey in LL[namespace as keyof typeof LL].validations) {
     // @ts-ignore
     translationFunction = LL[namespace as keyof typeof LL].validations[realKey];

@@ -1,6 +1,7 @@
 import type { BaseTranslation } from "../../i18n-types";
 
 const zh_CN_user = {
+  title: "用户",
   username: "用户名",
   email: "邮箱",
   phone_no: "手机号",

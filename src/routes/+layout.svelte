@@ -4,6 +4,7 @@
   import { onMount } from "svelte";
   import { themeChange } from "theme-change";
   import { Icon, UserCircle } from "svelte-hero-icons";
+  import { pageTitle, pageName, appName } from "$lib/titleStore";
 
   import "../app.css";
 
@@ -13,6 +14,8 @@
   onMount(() => {
     themeChange(false);
   });
+  $appName = $LL.terms.r3d_app();
+  $pageName = "";
 </script>
 
 <div class="navbar sticky top-0">
@@ -92,3 +95,7 @@
     </nav>
   </div>
 </footer>
+
+<svelte:head>
+  <title>{$pageTitle}</title>
+</svelte:head>

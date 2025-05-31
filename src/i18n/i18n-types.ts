@@ -149,6 +149,10 @@ export type NamespaceMainTranslation = {
 
 export type NamespaceUserTranslation = {
 	/**
+	 * 用​户
+	 */
+	title: string
+	/**
 	 * 用​户​名
 	 */
 	username: string
@@ -487,6 +491,10 @@ export type TranslationFunctions = {
 		}
 	}
 	user: {
+		/**
+		 * 用户
+		 */
+		title: () => LocalizedString
 		/**
 		 * 用户名
 		 */

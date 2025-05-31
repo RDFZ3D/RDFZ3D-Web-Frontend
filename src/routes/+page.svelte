@@ -1,3 +1,9 @@
+<script lang="ts">
+  import { pageName } from "$lib/titleStore";
+
+  $pageName = "";
+</script>
+
 <div class="p-10 text-lg">
   <p>
     由于

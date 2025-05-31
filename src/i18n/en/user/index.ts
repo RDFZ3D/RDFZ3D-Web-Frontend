@@ -1,6 +1,7 @@
 import type { NamespaceUserTranslation } from "../../i18n-types";
 
 const en_user = {
+  title: "User",
   username: "Username",
   email: "Email",
   phone_no: "Phone number",
