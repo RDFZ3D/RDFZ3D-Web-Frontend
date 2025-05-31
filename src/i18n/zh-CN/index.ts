@@ -21,6 +21,15 @@ const zh_CN = {
       server: "服务器错误：{message:string}。\n如果频繁出错，请在 Gitee 或 GitHub 提交 Issue。",
     },
   },
+  terms: {
+    rdfz_full: "中国人民大学附属中学",
+    rdfz_short: "人大附中",
+    r3d_app: "幻立红白",
+    r3d_project: "人大附中数字校园项目",
+    r3d_club: "人大附中数字校园社团",
+    gitee: "Gitee",
+    github: "GitHub",
+  },
 } satisfies BaseTranslation;
 
 export default zh_CN;

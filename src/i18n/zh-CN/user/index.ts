@@ -10,7 +10,7 @@ const zh_CN_user = {
   confirm_password: "确认密码",
   nickname: "昵称",
   avatar: "头像",
-  real_name: "姓名",
+  real_name: "真实姓名",
   gender: "性别",
   verified: "已验证",
   unverified: "未验证",

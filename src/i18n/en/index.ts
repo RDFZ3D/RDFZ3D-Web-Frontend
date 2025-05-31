@@ -23,6 +23,15 @@ const en = {
         "Server error: {message}.\nIf this occurs regularly, please submit an issue on GitHub.",
     },
   },
+  terms: {
+    rdfz_full: "The High School Affiliated to Renmin University of China",
+    rdfz_short: "RDFZ",
+    r3d_app: "Eternal RDFZ",
+    r3d_project: "RDFZ Digital Campus Project",
+    r3d_club: "RDFZ Digital Campus Club",
+    gitee: "Gitee",
+    github: "GitHub",
+  },
 } satisfies Translation;
 
 export default en;

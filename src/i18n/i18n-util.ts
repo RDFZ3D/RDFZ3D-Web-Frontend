@@ -16,6 +16,7 @@ export const locales: Locales[] = [
 ]
 
 export const namespaces: Namespaces[] = [
+	'main',
 	'user'
 ]
 

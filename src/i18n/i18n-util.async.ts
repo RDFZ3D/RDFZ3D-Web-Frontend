@@ -12,9 +12,11 @@ const localeTranslationLoaders = {
 
 const localeNamespaceLoaders = {
 	en: {
+		main: () => import('./en/main'),
 		user: () => import('./en/user')
 	},
 	'zh-CN': {
+		main: () => import('./zh-CN/main'),
 		user: () => import('./zh-CN/user')
 	}
 }

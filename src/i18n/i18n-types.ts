@@ -13,6 +13,7 @@ export type Translation = RootTranslation & DisallowNamespaces
 
 export type Translations = RootTranslation &
 {
+	main: NamespaceMainTranslation,
 	user: NamespaceUserTranslation
 }
 
@@ -91,6 +92,59 @@ type RootTranslation = {
 			server: RequiredParams<'message'>
 		}
 	}
+	terms: {
+		/**
+		 * 中​国​人​民​大​学​附​属​中​学
+		 */
+		rdfz_full: string
+		/**
+		 * 人​大​附​中
+		 */
+		rdfz_short: string
+		/**
+		 * 幻​立​红​白
+		 */
+		r3d_app: string
+		/**
+		 * 人​大​附​中​数​字​校​园​项​目
+		 */
+		r3d_project: string
+		/**
+		 * 人​大​附​中​数​字​校​园​社​团
+		 */
+		r3d_club: string
+		/**
+		 * G​i​t​e​e
+		 */
+		gitee: string
+		/**
+		 * G​i​t​H​u​b
+		 */
+		github: string
+	}
+}
+
+export type NamespaceMainTranslation = {
+	footer: {
+		project_pages: {
+			/**
+			 * 项​目​ ​R​e​p​o
+			 */
+			title: string
+			/**
+			 * B​u​g​ ​反​馈
+			 */
+			bug_report_repo: string
+			/**
+			 * 前​端​仓​库
+			 */
+			frontend_repo: string
+			/**
+			 * 后​端​仓​库
+			 */
+			backend_repo: string
+		}
+	}
 }
 
 export type NamespaceUserTranslation = {
@@ -131,7 +185,7 @@ export type NamespaceUserTranslation = {
 	 */
 	avatar: string
 	/**
-	 * 姓​名
+	 * 真​实​姓​名
 	 */
 	real_name: string
 	/**
@@ -298,9 +352,16 @@ export type NamespaceUserTranslation = {
 }
 
 export type Namespaces =
+	| 'main'
 	| 'user'
 
 type DisallowNamespaces = {
+	/**
+	 * reserved for 'main'-namespace\
+	 * you need to use the `./main/index.ts` file instead
+	 */
+	main?: "[typesafe-i18n] reserved for 'main'-namespace. You need to use the `./main/index.ts` file instead."
+
 	/**
 	 * reserved for 'user'-namespace\
 	 * you need to use the `./user/index.ts` file instead
@@ -373,6 +434,58 @@ export type TranslationFunctions = {
 			server: (arg: { message: string }) => LocalizedString
 		}
 	}
+	terms: {
+		/**
+		 * 中国人民大学附属中学
+		 */
+		rdfz_full: () => LocalizedString
+		/**
+		 * 人大附中
+		 */
+		rdfz_short: () => LocalizedString
+		/**
+		 * 幻立红白
+		 */
+		r3d_app: () => LocalizedString
+		/**
+		 * 人大附中数字校园项目
+		 */
+		r3d_project: () => LocalizedString
+		/**
+		 * 人大附中数字校园社团
+		 */
+		r3d_club: () => LocalizedString
+		/**
+		 * Gitee
+		 */
+		gitee: () => LocalizedString
+		/**
+		 * GitHub
+		 */
+		github: () => LocalizedString
+	}
+	main: {
+		footer: {
+			project_pages: {
+				/**
+				 * 项目 Repo
+				 */
+				title: () => LocalizedString
+				/**
+				 * Bug 反馈
+				 */
+				bug_report_repo: () => LocalizedString
+				/**
+				 * 前端仓库
+				 */
+				frontend_repo: () => LocalizedString
+				/**
+				 * 后端仓库
+				 */
+				backend_repo: () => LocalizedString
+			}
+		}
+	}
 	user: {
 		/**
 		 * 用户名
@@ -411,7 +524,7 @@ export type TranslationFunctions = {
 		 */
 		avatar: () => LocalizedString
 		/**
-		 * 姓名
+		 * 真实姓名
 		 */
 		real_name: () => LocalizedString
 		/**
