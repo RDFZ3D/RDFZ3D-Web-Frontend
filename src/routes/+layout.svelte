@@ -51,7 +51,7 @@
   </div>
 </div>
 
-<div class="container grow">
+<div class="grow">
   {@render children()}
 </div>
 

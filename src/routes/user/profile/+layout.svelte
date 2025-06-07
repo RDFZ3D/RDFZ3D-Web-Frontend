@@ -4,8 +4,11 @@
   let { children } = $props();
 </script>
 
-<div class="mx-auto flex max-w-4xl flex-row gap-4">
-  <ul class="menu bg-base-200 basis-64 self-start">
+<div class="mx-auto flex max-w-4xl flex-col gap-4 lg:flex-row">
+  <ul
+    class="menu menu-horizontal lg:menu-vertical bg-base-200 items-center self-start lg:basis-64 lg:items-stretch"
+  >
+    <li class="menu-title">{$LL.common.nav()}</li>
     <li><a href="info">{$LL.user.functions.profile.info.title()}</a></li>
     <li><a href="auth">{$LL.user.functions.profile.auth_info.title()}</a></li>
   </ul>

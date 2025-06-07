@@ -7,6 +7,8 @@ const zh_CN = {
     submit: "提交",
     cancel: "取消",
     optional: "可选",
+    nav: "导航",
+    index: "首页",
     null_: "空",
     validations: {
       required: "{field:string|lowercase}不能为空",

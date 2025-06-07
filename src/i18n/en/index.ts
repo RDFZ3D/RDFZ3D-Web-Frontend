@@ -7,6 +7,8 @@ const en = {
     submit: "Submit",
     cancel: "Cancel",
     optional: "Optional",
+    nav: "Navigation",
+    index: "Index",
     null_: "Null",
     validations: {
       required: "{field|capitalize} is required." as any,

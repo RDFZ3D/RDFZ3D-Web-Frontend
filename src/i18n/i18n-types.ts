@@ -40,6 +40,14 @@ type RootTranslation = {
 		 */
 		optional: string
 		/**
+		 * 导​航
+		 */
+		nav: string
+		/**
+		 * 首​页
+		 */
+		index: string
+		/**
 		 * 空
 		 */
 		null_: string
@@ -395,6 +403,14 @@ export type TranslationFunctions = {
 		 * 可选
 		 */
 		optional: () => LocalizedString
+		/**
+		 * 导航
+		 */
+		nav: () => LocalizedString
+		/**
+		 * 首页
+		 */
+		index: () => LocalizedString
 		/**
 		 * 空
 		 */
