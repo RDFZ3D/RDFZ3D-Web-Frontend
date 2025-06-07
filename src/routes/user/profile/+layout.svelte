@@ -7,6 +7,7 @@
 <div class="mx-auto flex max-w-4xl flex-row gap-4">
   <ul class="menu bg-base-200 basis-64 self-start">
     <li><a href="info">{$LL.user.functions.profile.info.title()}</a></li>
+    <li><a href="avatar">更改头像</a></li>
     <li><a href="auth">{$LL.user.functions.profile.auth_info.title()}</a></li>
   </ul>
   <div class="flex-grow">
