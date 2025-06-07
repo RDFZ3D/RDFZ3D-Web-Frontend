@@ -2,6 +2,7 @@
 
 @plugin "daisyui";
 
+/*noinspection CssUnknownProperty*/
 @plugin "daisyui/theme" {
   name: light;
   default: true;
@@ -37,6 +38,7 @@
   --noise: 0;
 }
 
+/*noinspection CssUnknownProperty*/
 @plugin "daisyui/theme" {
   name: dark;
   default: false;
