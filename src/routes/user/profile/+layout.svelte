@@ -10,6 +10,7 @@
   >
     <li class="menu-title">{$LL.common.nav()}</li>
     <li><a href="info">{$LL.user.functions.profile.info.title()}</a></li>
+    <li><a href="avatar">更改头像</a></li>
     <li><a href="auth">{$LL.user.functions.profile.auth_info.title()}</a></li>
   </ul>
   <div class="flex-grow">

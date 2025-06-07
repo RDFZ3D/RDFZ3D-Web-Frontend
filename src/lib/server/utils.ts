@@ -12,9 +12,47 @@ const axiosInstance = axios.create({
   },
 });
 
+//专门用来上传文件的
+const axiosInstanceFile = axios.create({
+  baseURL: API_HOST,
+  timeout: 1500,
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+});
+
 export const requestWrapped = async (route: string, method: string, token?: string, body?: any) => {
   try {
     const response = await axiosInstance.request({
+      url: route,
+      method: method,
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      data: body,
+    });
+    // console.log(route, response);
+    return response;
+  } catch (e) {
+    if (!(e instanceof axios.AxiosError)) {
+      throw e;
+    }
+    if (e.response) {
+      raiseError(e.response.status, e.response.data.detail);
+    }
+    throw e;
+  }
+};
+
+//也是专门用来上传文件的
+export const requestWrappedForFile = async (
+  route: string,
+  method: string,
+  token?: string,
+  body?: any,
+) => {
+  try {
+    const response = await axiosInstanceFile.request({
       url: route,
       method: method,
       headers: {

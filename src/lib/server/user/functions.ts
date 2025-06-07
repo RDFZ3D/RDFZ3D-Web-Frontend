@@ -1,7 +1,7 @@
 import type { RequestEvent } from "@sveltejs/kit";
 import type { LoginSchema } from "$lib/schemas/user/login";
 import type { RegisterSchema } from "$lib/schemas/user/register";
-import { requestWrapped } from "$lib/server/utils";
+import { requestWrapped, requestWrappedForFile } from "$lib/server/utils";
 import type { User } from "$lib/server/user";
 import { validateSessionToken } from "$lib/server/session/functions";
 import { deleteSessionTokenCookie, setSessionTokenCookie } from "$lib/server/session/utils";
@@ -48,6 +48,18 @@ export const patchMe = async (form: Partial<UserFullSchema>, event: RequestEvent
     JSON.stringify(form),
   );
   return response.data as UserFullSchema;
+};
+
+//新增上传头像功能 2025.6.7 by StrayMeteor3337
+//
+export const uploadAvatar = async (form: FormData, event: RequestEvent) => {
+  const response = await requestWrappedForFile(
+    "/user/upload_avatar",
+    "POST",
+    event.locals.session?.access_token,
+    form,
+  );
+  return response.data as FormData;
 };
 
 export const changePassword = async (
