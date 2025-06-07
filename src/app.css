@@ -75,7 +75,7 @@
 @utility btn {
   &:is(input[type="checkbox"], input[type="radio"]) {
     &:checked {
-      @apply btn-primary outline-0;
+      @apply btn-primary btn-active outline-0;
     }
   }
 }
