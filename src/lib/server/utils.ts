@@ -23,7 +23,7 @@ const axiosInstanceFile = axios.create({
 
 export const requestWrapped = async (route: string, method: string, token?: string, body?: any) => {
   try {
-    const response = await axiosInstance.request({
+    return await axiosInstance.request({
       url: route,
       method: method,
       headers: {
@@ -31,8 +31,6 @@ export const requestWrapped = async (route: string, method: string, token?: stri
       },
       data: body,
     });
-    // console.log(route, response);
-    return response;
   } catch (e) {
     if (!(e instanceof axios.AxiosError)) {
       throw e;
@@ -51,8 +49,9 @@ export const requestWrappedForFile = async (
   token?: string,
   body?: any,
 ) => {
+  console.log(body);
   try {
-    const response = await axiosInstanceFile.request({
+    return await axiosInstanceFile.request({
       url: route,
       method: method,
       headers: {
@@ -60,8 +59,6 @@ export const requestWrappedForFile = async (
       },
       data: body,
     });
-    // console.log(route, response);
-    return response;
   } catch (e) {
     if (!(e instanceof axios.AxiosError)) {
       throw e;

@@ -54,6 +54,10 @@ const zh_CN_user = {
       info: {
         title: "个人信息",
       },
+      avatar: {
+        title: "头像",
+        change_avatar: "更换头像",
+      },
       auth_info: {
         title: "账号与安全",
         change_password: {

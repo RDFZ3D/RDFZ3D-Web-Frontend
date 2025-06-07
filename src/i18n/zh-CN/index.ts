@@ -17,6 +17,8 @@ const zh_CN = {
       field_invalid: "{field:string|lowercase}无效",
       ascii_only: "{field:string|lowercase}只能包含字母、数字和常用符号",
       var_name_only: "{field:string|lowercase}只能包含字母、数字和下划线",
+      unsupported_file_type: "不支持的文件类型",
+      file_too_large: "文件不得超过 {max_size:string}",
     },
     errors: {
       unhandled: "异常：{message:string}。\n如果频繁出错，请在 Gitee 或 GitHub 提交 Issue。",

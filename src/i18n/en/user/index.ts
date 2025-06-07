@@ -54,6 +54,10 @@ const en_user = {
       info: {
         title: "Personal Information",
       },
+      avatar: {
+        title: "Avatar",
+        change_avatar: "Change avatar",
+      },
       auth_info: {
         title: "Authentication Information",
         change_password: {

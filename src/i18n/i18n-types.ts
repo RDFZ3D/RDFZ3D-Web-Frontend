@@ -84,6 +84,15 @@ type RootTranslation = {
 			 * @param {string} field
 			 */
 			var_name_only: RequiredParams<'field|lowercase'>
+			/**
+			 * 不​支​持​的​文​件​类​型
+			 */
+			unsupported_file_type: string
+			/**
+			 * 文​件​不​得​超​过​ ​{​m​a​x​_​s​i​z​e​}
+			 * @param {string} max_size
+			 */
+			file_too_large: RequiredParams<'max_size'>
 		}
 		errors: {
 			/**
@@ -320,6 +329,16 @@ export type NamespaceUserTranslation = {
 				 */
 				title: string
 			}
+			avatar: {
+				/**
+				 * 头​像
+				 */
+				title: string
+				/**
+				 * 更​换​头​像
+				 */
+				change_avatar: string
+			}
 			auth_info: {
 				/**
 				 * 账​号​与​安​全
@@ -440,6 +459,14 @@ export type TranslationFunctions = {
 			 * {field|lowercase}只能包含字母、数字和下划线
 			 */
 			var_name_only: (arg: { field: string }) => LocalizedString
+			/**
+			 * 不支持的文件类型
+			 */
+			unsupported_file_type: () => LocalizedString
+			/**
+			 * 文件不得超过 {max_size}
+			 */
+			file_too_large: (arg: { max_size: string }) => LocalizedString
 		}
 		errors: {
 			/**
@@ -670,6 +697,16 @@ export type TranslationFunctions = {
 					 * 个人信息
 					 */
 					title: () => LocalizedString
+				}
+				avatar: {
+					/**
+					 * 头像
+					 */
+					title: () => LocalizedString
+					/**
+					 * 更换头像
+					 */
+					change_avatar: () => LocalizedString
 				}
 				auth_info: {
 					/**

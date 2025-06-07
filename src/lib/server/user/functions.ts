@@ -52,21 +52,28 @@ export const patchMe = async (form: Partial<UserFullSchema>, event: RequestEvent
 
 //新增上传头像功能 2025.6.7 by StrayMeteor3337
 //
-export const uploadAvatar = async (form: FormData, event: RequestEvent) => {
-  const response = await requestWrappedForFile(
+export const uploadAvatar = async (
+  form: {
+    avatar_file: File;
+  },
+  event: RequestEvent,
+) => {
+  const formData = new FormData();
+  formData.append("avatar_file", form.avatar_file, form.avatar_file.name);
+  await requestWrappedForFile(
     "/user/upload_avatar",
     "POST",
     event.locals.session?.access_token,
-    form,
+    formData,
   );
-  return response.data as FormData;
+  return true;
 };
 
 export const changePassword = async (
   form: { old_password: string; new_password: string },
   event: RequestEvent,
 ) => {
-  const response = await requestWrapped(
+  await requestWrapped(
     "/auth/change-password",
     "POST",
     event.locals.session?.access_token,

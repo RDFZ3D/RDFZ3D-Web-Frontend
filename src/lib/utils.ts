@@ -56,6 +56,9 @@ export const getValidationTranslatedStringByKey = <TNamespace extends keyof Tran
   } else if (realKey.startsWith("too_long") && field) {
     const max_length = parseInt(realKey.split(":")[1]);
     return LL.common.validations.too_long({ field, max_length });
+  } else if (realKey.startsWith("file_too_large") && field) {
+    const max_size = realKey.split(":")[1];
+    return LL.common.validations.file_too_large({ max_size });
   }
   let translationFunction: (...args: any[]) => LocalizedString;
   if (realKey in LL.common.validations) {

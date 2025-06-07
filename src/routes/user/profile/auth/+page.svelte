@@ -1,24 +1,21 @@
 <script lang="ts">
   import { superForm } from "sveltekit-superforms/client";
   import { zod } from "sveltekit-superforms/adapters";
-  import type { TranslationFunctions } from "$i18n/i18n-types";
 
   import * as utils from "$lib/utils";
   import LL from "$i18n/i18n-svelte";
   import {
     userFullSchema,
-    type UserFullSchemaKey,
     type UserWritableSchema,
     userWritableSchema,
     type UserWritableSchemaKey,
   } from "$lib/schemas/user/user";
-  import type { FormFieldsetInfo, FormInfo } from "$lib/schemas/form";
-  import SuperDebug from "sveltekit-superforms";
+  import type { FormFieldsetInfo } from "$lib/schemas/form";
   import { changePasswordSchema } from "$lib/schemas/user/changePassword";
 
   let { data } = $props();
 
-  const { form, errors, constraints, message, tainted, isTainted, enhance } = superForm(data.form, {
+  const { form, errors, message, tainted, isTainted, enhance } = superForm(data.form, {
     validators: zod(userFullSchema),
     resetForm: false,
   });
@@ -36,7 +33,7 @@
   const changePasswordFieldKeys = ["old_password", "new_password"] as const;
   // const fieldsets: FormInfo<
   //   Exclude<keyof TranslationFunctions["user"]["functions"]["profile"], "title">,
-  //   Exclude<ExcludePublicKeys<UserWritableSchemaKey>, "avatar_path">
+  //   Exclude<ExcludePublicKeys<UserWritableSchemaKey>, "avatar_file">
   // > = [
   //   {
   //     title: "info",

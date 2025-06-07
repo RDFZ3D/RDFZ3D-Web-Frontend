@@ -17,6 +17,8 @@ const en = {
       field_invalid: "Invalid {field|lowercase}.",
       ascii_only: "Only ASCII characters are allowed in {field|lowercase}.",
       var_name_only: "Only letters, numbers and underscores are allowed in {field|lowercase}.",
+      unsupported_file_type: "Unsupported file type.",
+      file_too_large: "File size should be less than {max_size}.",
     },
     errors: {
       unhandled:
