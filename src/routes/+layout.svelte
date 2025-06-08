@@ -73,21 +73,21 @@
       </span>
       <span>
         {$LL.main.footer.project_pages.frontend_repo()}:
-        <a href="https://gitee.com/rogerwang2008/RDFZ3D-Web-Frontend" target="_blank" class="link">
+        <a href="https://gitee.com/RDFZ3D/RDFZ3D-Web-Frontend" target="_blank" class="link">
           {$LL.terms.gitee()}
         </a>
         /
-        <a href="https://github.com/rogerwang2008/RDFZ3D-Web-Frontend" target="_blank" class="link">
+        <a href="https://github.com/RDFZ3D/RDFZ3D-Web-Frontend" target="_blank" class="link">
           {$LL.terms.github()}
         </a>
       </span>
       <span>
         {$LL.main.footer.project_pages.backend_repo()}:
-        <a href="https://gitee.com/rogerwang2008/RDFZ3D-Backend" target="_blank" class="link">
+        <a href="https://gitee.com/RDFZ3D/RDFZ3D-Backend" target="_blank" class="link">
           {$LL.terms.gitee()}
         </a>
         /
-        <a href="https://github.com/rogerwang2008/RDFZ3D-Backend" target="_blank" class="link">
+        <a href="https://github.com/RDFZ3D/RDFZ3D-Backend" target="_blank" class="link">
           {$LL.terms.github()}
         </a>
       </span>
