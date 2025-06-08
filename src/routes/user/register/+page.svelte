@@ -24,7 +24,7 @@
 
 <form method="POST" use:enhance class="my-6 flex items-center justify-center">
   <fieldset class="fieldset bg-base-200 rounded-box w-xs p-4">
-    <legend class="fieldset-legend">{$LL.user.functions.login.title()}</legend>
+    <legend class="fieldset-legend">{$LL.user.functions.register.title()}</legend>
 
     {#each fields as field}
       <label class="fieldset-label" for="input-{field.fieldKey}">
