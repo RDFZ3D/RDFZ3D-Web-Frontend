@@ -18,7 +18,7 @@
   $pageName = "";
 </script>
 
-<div class="navbar sticky top-0">
+<div class="navbar bg-base-200 sticky top-0 z-1000">
   <div class="flex-1">
     <a href="/" class="btn btn-ghost text-primary text-xl">
       <img src="/r3d-logo-red-512.png" alt="RDFZ3D Logo" class="size-9" />{$LL.terms.r3d_app()}</a
