@@ -55,12 +55,22 @@
   {@render children()}
 </div>
 
-<footer class="text-base-content bg-base-200 p-10">
+<footer class="text-base-content bg-base-200 gap-16 p-10">
   <div class="footer sm:footer-horizontal m-auto max-w-6xl">
     <aside>
       <img src="/r3d-logo-red-512.png" alt="RDFZ3D Logo" class="size-[128px]" />
       <p>
         <b>{$LL.terms.r3d_app()}</b> —— {$LL.terms.r3d_project()}
+      </p>
+      <p>
+        {$LL.terms.r3d_club()}:
+        <a href="https://gitee.com/RDFZ3D" target="_blank" class="link">
+          {$LL.terms.gitee()}
+        </a>
+        /
+        <a href="https://github.com/RDFZ3D" target="_blank" class="link">
+          {$LL.terms.github()}
+        </a>
       </p>
     </aside>
     <nav>
@@ -93,6 +103,11 @@
       </span>
       <span class="text-muted">对于不确定从属的 Bug，请一概前往 Bug 反馈仓库提交 Issue。</span>
     </nav>
+  </div>
+  <div class="text-base-content mt-6 text-center text-sm opacity-60">
+    <a href="https://beian.miit.gov.cn/" target="_blank" class="link link-hover">
+      京 ICP 备 2023 00000001 号
+    </a>
   </div>
 </footer>
 
