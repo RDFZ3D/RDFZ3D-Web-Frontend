@@ -11,6 +11,7 @@ const en = {
     index: "Index",
     null_: "Null",
     download: "Download",
+    click_to_unfold: "Click to unfold",
     validations: {
       required: "{field|capitalize} is required." as any,
       too_long: "{field|capitalize} can’t be longer than {max_length} characters." as any,

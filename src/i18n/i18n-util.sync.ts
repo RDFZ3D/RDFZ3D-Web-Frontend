@@ -8,19 +8,23 @@ import { loadedFormatters, loadedLocales, locales } from './i18n-util'
 import en from './en'
 import zh_CN from './zh-CN'
 
+import en_download from './en/download'
 import en_main from './en/main'
 import en_user from './en/user'
+import zh_CN_download from './zh-CN/download'
 import zh_CN_main from './zh-CN/main'
 import zh_CN_user from './zh-CN/user'
 
 const localeTranslations = {
 	en: {
 		...en,
+		download: en_download,
 		main: en_main,
 		user: en_user
 	},
 	'zh-CN': {
 		...zh_CN,
+		download: zh_CN_download,
 		main: zh_CN_main,
 		user: zh_CN_user
 	},

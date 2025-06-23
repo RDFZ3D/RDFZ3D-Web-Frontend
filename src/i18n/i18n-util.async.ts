@@ -12,10 +12,12 @@ const localeTranslationLoaders = {
 
 const localeNamespaceLoaders = {
 	en: {
+		download: () => import('./en/download'),
 		main: () => import('./en/main'),
 		user: () => import('./en/user')
 	},
 	'zh-CN': {
+		download: () => import('./zh-CN/download'),
 		main: () => import('./zh-CN/main'),
 		user: () => import('./zh-CN/user')
 	}

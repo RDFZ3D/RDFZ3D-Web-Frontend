@@ -11,6 +11,7 @@ const zh_CN = {
     index: "首页",
     null_: "空",
     download: "下载",
+    click_to_unfold: "点击展开",
     validations: {
       required: "{field:string|lowercase}不能为空",
       too_long: "{field:string|lowercase}至多有 {max_length:number} 个字符",

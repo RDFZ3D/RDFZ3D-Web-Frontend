@@ -13,6 +13,7 @@ export type Translation = RootTranslation & DisallowNamespaces
 
 export type Translations = RootTranslation &
 {
+	download: NamespaceDownloadTranslation,
 	main: NamespaceMainTranslation,
 	user: NamespaceUserTranslation
 }
@@ -55,6 +56,10 @@ type RootTranslation = {
 		 * 下​载
 		 */
 		download: string
+		/**
+		 * 点​击​展​开
+		 */
+		click_to_unfold: string
 		validations: {
 			/**
 			 * {​f​i​e​l​d​|​l​o​w​e​r​c​a​s​e​}​不​能​为​空
@@ -150,6 +155,22 @@ type RootTranslation = {
 		 */
 		index: string
 	}
+}
+
+export type NamespaceDownloadTranslation = {
+	/**
+	 * 下​载​ ​{​p​l​a​t​f​o​r​m​}​ ​版​本
+	 * @param {string} platform
+	 */
+	download_version: RequiredParams<'platform'>
+	/**
+	 * 据​你​的​平​台​推​荐
+	 */
+	suggested_by_platform: string
+	/**
+	 * 其​他​平​台
+	 */
+	other_platforms: string
 }
 
 export type NamespaceMainTranslation = {
@@ -394,10 +415,17 @@ export type NamespaceUserTranslation = {
 }
 
 export type Namespaces =
+	| 'download'
 	| 'main'
 	| 'user'
 
 type DisallowNamespaces = {
+	/**
+	 * reserved for 'download'-namespace\
+	 * you need to use the `./download/index.ts` file instead
+	 */
+	download?: "[typesafe-i18n] reserved for 'download'-namespace. You need to use the `./download/index.ts` file instead."
+
 	/**
 	 * reserved for 'main'-namespace\
 	 * you need to use the `./main/index.ts` file instead
@@ -449,6 +477,10 @@ export type TranslationFunctions = {
 		 * 下载
 		 */
 		download: () => LocalizedString
+		/**
+		 * 点击展开
+		 */
+		click_to_unfold: () => LocalizedString
 		validations: {
 			/**
 			 * {field|lowercase}不能为空
@@ -532,6 +564,20 @@ export type TranslationFunctions = {
 	用数字技术重现红白记忆，连接每一代 RDFZer 的青春。
 		 */
 		index: () => LocalizedString
+	}
+	download: {
+		/**
+		 * 下载 {platform} 版本
+		 */
+		download_version: (arg: { platform: string }) => LocalizedString
+		/**
+		 * 据你的平台推荐
+		 */
+		suggested_by_platform: () => LocalizedString
+		/**
+		 * 其他平台
+		 */
+		other_platforms: () => LocalizedString
 	}
 	main: {
 		footer: {
