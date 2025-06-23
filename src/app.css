@@ -4,14 +4,14 @@
 
 /*noinspection CssUnknownProperty*/
 @plugin "daisyui/theme" {
-  name: light;
-  default: true;
-  prefersdark: false;
-  color-scheme: light;
-  --color-base-100: oklch(100% 0 0);
-  --color-base-200: oklch(98% 0 0);
-  --color-base-300: oklch(95% 0 0);
-  --color-base-content: oklch(21% 0.006 285.885);
+  name: dark;
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
+  --color-base-100: oklch(25.33% 0 0);
+  --color-base-200: oklch(23.26% 0 0);
+  --color-base-300: oklch(21.15% 0 0);
+  --color-base-content: oklch(97.807% 0.029 256.847);
   --color-primary: oklch(62.04% 0.1757 23.76);
   --color-primary-content: oklch(100% 0 0);
   --color-secondary: oklch(65% 0.241 354.308);
@@ -40,14 +40,14 @@
 
 /*noinspection CssUnknownProperty*/
 @plugin "daisyui/theme" {
-  name: dark;
-  default: false;
-  prefersdark: true;
-  color-scheme: dark;
-  --color-base-100: oklch(25.33% 0 0);
-  --color-base-200: oklch(23.26% 0 0);
-  --color-base-300: oklch(21.15% 0 0);
-  --color-base-content: oklch(97.807% 0.029 256.847);
+  name: light;
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+  --color-base-100: oklch(100% 0 0);
+  --color-base-200: oklch(98% 0 0);
+  --color-base-300: oklch(95% 0 0);
+  --color-base-content: oklch(21% 0.006 285.885);
   --color-primary: oklch(62.04% 0.1757 23.76);
   --color-primary-content: oklch(100% 0 0);
   --color-secondary: oklch(65% 0.241 354.308);

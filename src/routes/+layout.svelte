@@ -2,20 +2,34 @@
   import LL from "$i18n/i18n-svelte";
   import { PUBLIC_API_HOST } from "$env/static/public";
   import { onMount } from "svelte";
-  import { themeChange } from "theme-change";
-  import { Icon, UserCircle } from "svelte-hero-icons";
-  import { pageTitle, pageName, appName } from "$lib/titleStore";
+  import { Sun, Moon, SunMoon, CircleUserRound } from "@lucide/svelte";
+  import { pageTitle, appName } from "$lib/titleStore";
+  import { persisted, type Persisted } from "svelte-persisted-store";
 
   import "../app.css";
 
   let { children, data } = $props();
 
+  $appName = $LL.terms.r3d_app();
+
+  const theme: Persisted<"light" | "dark" | ""> = persisted("theme", "");
+
+  const switchTheme = () => {
+    if ($theme === "light") {
+      $theme = "dark";
+    } else if ($theme === "dark") {
+      $theme = "";
+    } else {
+      $theme = "light";
+    }
+  };
+
   // NOTE: the element that is using one of the theme attributes must be in the DOM on mount
   onMount(() => {
-    themeChange(false);
+    theme.subscribe((theme) => {
+      document.body.setAttribute("data-theme", theme);
+    });
   });
-  $appName = $LL.terms.r3d_app();
-  $pageName = "";
 </script>
 
 <div class="navbar bg-base-200 sticky top-0 z-1000">
@@ -24,6 +38,18 @@
       <img src="/r3d-logo-red-512.png" alt="RDFZ3D Logo" class="size-9" />{$LL.terms.r3d_app()}</a
     >
   </div>
+  <!-- THEME CHANGE -->
+  <button class="btn btn-ghost btn-circle flex-none" onclick={switchTheme}>
+    {#if $theme === "light"}
+      <Sun class="size-6" />
+    {:else if $theme === "dark"}
+      <Moon class="size-6" />
+    {:else}
+      <SunMoon class="size-6" />
+    {/if}
+  </button>
+
+  <!-- USER -->
   <div class="flex-none">
     {#if data.user}
       <div class="dropdown dropdown-end">
@@ -44,7 +70,7 @@
     {:else}
       <div class="flex-none">
         <a href="/user/login" aria-label="User Login" class="btn btn-ghost btn-circle">
-          <Icon src={UserCircle} solid />
+          <CircleUserRound class="size-8" />
         </a>
       </div>
     {/if}
