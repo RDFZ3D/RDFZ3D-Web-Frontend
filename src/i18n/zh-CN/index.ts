@@ -10,6 +10,7 @@ const zh_CN = {
     nav: "导航",
     index: "首页",
     null_: "空",
+    download: "下载",
     validations: {
       required: "{field:string|lowercase}不能为空",
       too_long: "{field:string|lowercase}至多有 {max_length:number} 个字符",
@@ -33,6 +34,9 @@ const zh_CN = {
     r3d_club: "人大附中数字校园社团",
     gitee: "Gitee",
     github: "GitHub",
+  },
+  descriptions: {
+    index: "人大附中元宇宙校园，\n用数字技术重现红白记忆，连接每一代 RDFZer 的青春。",
   },
 } satisfies BaseTranslation;
 

@@ -10,6 +10,7 @@ const en = {
     nav: "Navigation",
     index: "Index",
     null_: "Null",
+    download: "Download",
     validations: {
       required: "{field|capitalize} is required." as any,
       too_long: "{field|capitalize} can’t be longer than {max_length} characters." as any,
@@ -35,6 +36,9 @@ const en = {
     r3d_club: "RDFZ Digital Campus Club",
     gitee: "Gitee",
     github: "GitHub",
+  },
+  descriptions: {
+    index: "where binary roses never fade,\nand digital dawns guard vows we made.",
   },
 } satisfies Translation;
 

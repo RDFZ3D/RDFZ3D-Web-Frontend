@@ -51,6 +51,10 @@ type RootTranslation = {
 		 * 空
 		 */
 		null_: string
+		/**
+		 * 下​载
+		 */
+		download: string
 		validations: {
 			/**
 			 * {​f​i​e​l​d​|​l​o​w​e​r​c​a​s​e​}​不​能​为​空
@@ -138,6 +142,13 @@ type RootTranslation = {
 		 * G​i​t​H​u​b
 		 */
 		github: string
+	}
+	descriptions: {
+		/**
+		 * 人​大​附​中​元​宇​宙​校​园​，​
+	​用​数​字​技​术​重​现​红​白​记​忆​，​连​接​每​一​代​ ​R​D​F​Z​e​r​ ​的​青​春​。
+		 */
+		index: string
 	}
 }
 
@@ -434,6 +445,10 @@ export type TranslationFunctions = {
 		 * 空
 		 */
 		null_: () => LocalizedString
+		/**
+		 * 下载
+		 */
+		download: () => LocalizedString
 		validations: {
 			/**
 			 * {field|lowercase}不能为空
@@ -510,6 +525,13 @@ export type TranslationFunctions = {
 		 * GitHub
 		 */
 		github: () => LocalizedString
+	}
+	descriptions: {
+		/**
+		 * 人大附中元宇宙校园，
+	用数字技术重现红白记忆，连接每一代 RDFZer 的青春。
+		 */
+		index: () => LocalizedString
 	}
 	main: {
 		footer: {

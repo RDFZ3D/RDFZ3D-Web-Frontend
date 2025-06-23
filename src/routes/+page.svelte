@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { pageName } from "$lib/titleStore";
+  import LL from "$i18n/i18n-svelte";
   import { onMount } from "svelte";
+  import { pageName } from "$lib/titleStore";
 
   $pageName = "";
 
@@ -18,28 +19,25 @@
   });
 </script>
 
-<!--这里背景图片会根据屏幕长宽的比例切换，移动端为竖版图片，桌面端为横板图片-->
 <div
-  class="flex min-h-screen flex-col items-center justify-center bg-cover bg-center"
+  class="flex min-h-[calc(100vh_-_64px)] flex-col items-center justify-center bg-cover bg-center"
   style="background-image: url({isMobile ? '/bg-mobile.png' : '/bg.png'});"
 >
-  <div class="flex flex-col items-center rounded-xl bg-black/40 p-8 shadow-xl backdrop-blur-sm">
-    <h1 class="mb-4 text-4xl font-bold text-white drop-shadow-lg md:text-5xl">人大附中数字校园</h1>
-    <p class="mb-8 max-w-xl text-center text-lg text-white drop-shadow">
-      人大附中数字校园项目致力于打造 1:1
-      真实还原的虚拟校园，为师生提供校园介绍、校园导览、云端相聚等服务。
+  <div class="card bg-neutral/40 text-neutral-content items-center p-16 shadow-xl backdrop-blur-sm">
+    <h1 class="mb-5 text-5xl font-extrabold drop-shadow-lg md:text-6xl">{$LL.terms.r3d_app()}</h1>
+    <h2 class="mb-6 text-2xl font-bold drop-shadow-lg md:text-3xl">
+      {$LL.terms.r3d_project()}
+    </h2>
+    <p class="mb-8 max-w-xl text-center text-lg whitespace-pre-line drop-shadow">
+      {$LL.descriptions.index()}
     </p>
-    <div class="mb-2 flex gap-4">
-      <a class="btn btn-primary btn-lg shadow-lg" href="/download" target="_blank"> 下载 </a>
-      <a class="btn btn-primary btn-lg shadow-lg" href="/web" target="_blank"> 网页端 </a>
-    </div>
-    <div class="mt-4 flex w-full justify-center">
-      <a
-        href="/user/login"
-        class="text-xs text-gray-300 opacity-60 transition select-none hover:underline"
+    <div class="mb-6 flex gap-4">
+      <a class="btn btn-primary btn-lg shadow-lg" href="/download" target="_blank"
+        >{$LL.common.download()}</a
       >
-        登录/注册
-      </a>
+    </div>
+    <div class="flex w-full justify-center">
+      <a href="/user/login" class="link link-hover opacity-70"> 登录 / 注册 </a>
     </div>
   </div>
 </div>
