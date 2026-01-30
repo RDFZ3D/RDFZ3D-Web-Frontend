@@ -1,10 +1,13 @@
 <script lang="ts">
   import LL from "$i18n/i18n-svelte";
-  import { PUBLIC_API_HOST } from "$env/static/public";
+  //import { PUBLIC_API_HOST } from "$env/static/public";
   import { onMount } from "svelte";
   import { Sun, Moon, SunMoon, CircleUserRound } from "@lucide/svelte";
   import { pageTitle, appName } from "$lib/titleStore";
   import { persisted, type Persisted } from "svelte-persisted-store";
+
+  //.env好像在client不可用，先硬编码api地址了
+  const PUBLIC_API_HOST = "https://api.r3d.x-way.work";
 
   import "../app.css";
 

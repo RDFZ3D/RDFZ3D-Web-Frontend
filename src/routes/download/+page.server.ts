@@ -1,5 +1,8 @@
 import type { RequestEvent } from "@sveltejs/kit";
 
+//.env好像在client不可用，先硬编码api地址了
+const PUBLIC_API_HOST = "https://api.r3d.x-way.work";
+
 type PlatformKeys = "windows" | "macos" | "linux" | "android" | "ios";
 
 type PlatformInfo = {
@@ -7,34 +10,6 @@ type PlatformInfo = {
   key: PlatformKeys;
   downloadUrl: string | undefined;
 };
-
-const PLATFORMS: PlatformInfo[] = [
-  {
-    name: "Windows",
-    key: "windows",
-    downloadUrl: "https://example.com/download/windows-installer.exe",
-  },
-  {
-    name: "macOS",
-    key: "macos",
-    downloadUrl: "https://example.com/download/macos-installer.dmg",
-  },
-  {
-    name: "Linux",
-    key: "linux",
-    downloadUrl: "https://example.com/download/linux-installer.AppImage",
-  },
-  {
-    name: "Android",
-    key: "android",
-    downloadUrl: "https://example.com/download/android.apk",
-  },
-  {
-    name: "iOS",
-    key: "ios",
-    downloadUrl: "https://example.com/download/ios.ipa",
-  },
-];
 
 // 这都是copilot写的，通过检测UA标识获取目标设备的平台
 
@@ -60,14 +35,29 @@ export const load = async ({ request }: RequestEvent) => {
   const userAgent = request.headers.get("user-agent") || "";
   const detected = detectPlatform(userAgent);
 
+  let platforms: PlatformInfo[] = [];
+  try {
+    const res = await fetch(`${PUBLIC_API_HOST}/static/download.json`);
+    if (res.ok) {
+      platforms = await res.json();
+    }
+  } catch (err) {
+    // ignore, 返回空
+  }
+
+  // fallback: 如果没拉到数据，防止页面炸掉
+  if (!platforms || platforms.length === 0) {
+    platforms = [];
+  }
+
   let top: PlatformInfo | undefined;
   let others: PlatformInfo[];
 
   if (detected) {
-    top = PLATFORMS.find((p) => p.key === detected);
-    others = PLATFORMS.filter((p) => p.key !== detected);
+    top = platforms.find((p) => p.key === detected);
+    others = platforms.filter((p) => p.key !== detected);
   } else {
-    others = PLATFORMS;
+    others = platforms;
   }
 
   return {
