@@ -21,7 +21,7 @@ const en_user = {
   genders: {
     female: "Female",
     male: "Male",
-    other: "Walmart Bag",
+    other: "Other",
   },
   birthday: "Birthday",
   identity: "Identity",
