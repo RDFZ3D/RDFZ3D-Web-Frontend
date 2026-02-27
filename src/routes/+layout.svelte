@@ -1,6 +1,5 @@
 <script lang="ts">
   import LL from "$i18n/i18n-svelte";
-  //import { PUBLIC_API_HOST } from "$env/static/public";
   import { onMount } from "svelte";
   import { Sun, Moon, SunMoon, CircleUserRound } from "@lucide/svelte";
   import { pageTitle, appName } from "$lib/titleStore";
@@ -10,6 +9,7 @@
   const PUBLIC_API_HOST = "https://api.r3d.x-way.work";
 
   import "../app.css";
+  import { onNavigate } from "$app/navigation";
 
   let { children, data } = $props();
 
@@ -33,9 +33,20 @@
       document.body.setAttribute("data-theme", theme);
     });
   });
+
+  onNavigate((navigation) => {
+    if (!document.startViewTransition) return;
+
+    return new Promise((resolve) => {
+      document.startViewTransition(async () => {
+        resolve();
+        await navigation.complete;
+      });
+    });
+  });
 </script>
 
-<div class="navbar bg-base-200 sticky top-0 z-1000">
+<div class="navbar bg-base-200 sticky top-0 z-1000" style="view-transition-name: header">
   <div class="flex-1">
     <a href="/" class="btn btn-ghost text-primary text-xl">
       <img src="/r3d-logo-red-512.png" alt="RDFZ3D Logo" class="size-9" />{$LL.terms.r3d_app()}</a
@@ -84,10 +95,10 @@
   {@render children()}
 </div>
 
-<footer class="text-base-content bg-base-200 gap-16 p-10">
+<footer class="text-base-content bg-base-200 gap-16 p-10" style="view-transition-name: footer">
   <div class="footer sm:footer-horizontal m-auto max-w-6xl">
     <aside>
-      <img src="/r3d-logo-red-512.png" alt="RDFZ3D Logo" class="size-[128px]" />
+      <img src="/r3d-logo-red-512.png" alt="RDFZ3D Logo" class="size-32" />
       <p>
         <b>{$LL.terms.r3d_app()}</b> —— {$LL.terms.r3d_project()}
       </p>

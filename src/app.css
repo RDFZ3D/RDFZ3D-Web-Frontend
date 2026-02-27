@@ -85,3 +85,7 @@
 @utility fieldset-legend {
   @apply text-lg;
 }
+
+html {
+  overflow-y: scroll;
+}
