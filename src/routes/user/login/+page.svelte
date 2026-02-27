@@ -1,6 +1,6 @@
 <script lang="ts">
   import { superForm } from "sveltekit-superforms/client";
-  import { zod } from "sveltekit-superforms/adapters";
+  import { zod4 } from "sveltekit-superforms/adapters";
 
   import * as utils from "$lib/utils";
   import LL from "$i18n/i18n-svelte";
@@ -10,7 +10,7 @@
   let { data } = $props();
 
   const { form, errors, message, enhance } = superForm(data.form, {
-    validators: zod(loginSchema),
+    validators: zod4(loginSchema),
   });
 
   const fields: FormFieldsetInfo<LoginSchemaKey> = [
@@ -38,8 +38,7 @@
       />
       <p class="fieldset-label {$errors[field.fieldKey] ? 'text-error' : ''}">
         {#if $errors[field.fieldKey]}
-          {#each $errors[field.fieldKey] || [] as error}
-            <!-- “|| []” 用于规避 svelte 语言服务器的报错 -->
+          {#each $errors[field.fieldKey] as error}
             {utils.getValidationTranslatedStringByKey($LL, error, field.fieldKey, "user")}<br />
           {/each}
         {:else}

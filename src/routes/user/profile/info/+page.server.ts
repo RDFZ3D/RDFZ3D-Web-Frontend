@@ -1,6 +1,6 @@
 import { type Actions, fail, type RequestEvent } from "@sveltejs/kit";
 import { message, setError, superValidate } from "sveltekit-superforms/server";
-import { zod } from "sveltekit-superforms/adapters";
+import { zod4 } from "sveltekit-superforms/adapters";
 import { AxiosError } from "axios";
 import type { PageServerLoad } from "./$types";
 import type { TranslationFunctions } from "$i18n/i18n-types";
@@ -14,13 +14,13 @@ let LL: TranslationFunctions;
 
 export const load: PageServerLoad = async (event: RequestEvent) => {
   LL = event.locals.LL;
-  const form = await superValidate(event.locals.user, zod(userFullSchema));
+  const form = await superValidate(event.locals.user, zod4(userFullSchema));
   return { form };
 };
 
 export const actions: Actions = {
   default: async (event) => {
-    const form = await superValidate(event.request, zod(userFullSchema));
+    const form = await superValidate(event.request, zod4(userFullSchema));
     if (!form.valid) {
       return fail(400, { form });
     }

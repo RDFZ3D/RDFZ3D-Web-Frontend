@@ -1,6 +1,6 @@
 <script lang="ts">
   import { superForm } from "sveltekit-superforms/client";
-  import { zod } from "sveltekit-superforms/adapters";
+  import { zod4 } from "sveltekit-superforms/adapters";
   import type { TranslationFunctions } from "$i18n/i18n-types";
 
   import * as utils from "$lib/utils";
@@ -16,7 +16,7 @@
   let { data } = $props();
 
   const { form, errors, constraints, message, tainted, isTainted, enhance } = superForm(data.form, {
-    validators: zod(userFullSchema),
+    validators: zod4(userFullSchema),
     resetForm: false,
   });
   type ExcludePublicKeys<T extends string> = T extends `${infer _}_public` ? never : T;
@@ -135,8 +135,7 @@
         <div class="flex items-start gap-2">
           <p class="fieldset-label flex-1 {$errors[field.fieldKey] ? 'text-error' : ''}">
             {#if $errors[field.fieldKey]}
-              {#each $errors[field.fieldKey] || [] as error}
-                <!-- “|| []” 用于规避 svelte 语言服务器的报错 -->
+              {#each $errors[field.fieldKey] as error}
                 {utils.getValidationTranslatedStringByKey($LL, error, field.fieldKey, "user")}<br />
               {/each}
             {:else if ($tainted === undefined || !isTainted($tainted[field.fieldKey])) && ((field.fieldKey === "email" && !$form.is_email_verified) || (field.fieldKey === "phone_no" && !$form.is_phone_verified))}

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { fileProxy, superForm } from "sveltekit-superforms/client";
-  import { zod } from "sveltekit-superforms/adapters";
+  import { zod4 } from "sveltekit-superforms/adapters";
 
   import * as utils from "$lib/utils";
   import LL from "$i18n/i18n-svelte";
@@ -9,7 +9,7 @@
   let { data } = $props();
 
   const { form, errors, message, enhance } = superForm(data.form, {
-    validators: zod(changeAvatarSchema),
+    validators: zod4(changeAvatarSchema),
     validationMethod: "oninput",
     // resetForm: false,
   });
@@ -29,8 +29,7 @@
     />
     <p class="fieldset-label {$errors['avatar_file'] ? 'text-error' : ''}">
       {#if $errors["avatar_file"]}
-        {#each $errors["avatar_file"] || [] as error}
-          <!-- “|| []” 用于规避 svelte 语言服务器的报错 -->
+        {#each $errors["avatar_file"] as error}
           {utils.getValidationTranslatedStringByKey($LL, error, undefined, "user")}<br />
         {/each}
       {:else}

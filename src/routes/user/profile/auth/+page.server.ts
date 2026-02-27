@@ -1,9 +1,8 @@
-import { z } from "zod";
 import type { TranslationFunctions } from "$i18n/i18n-types";
 import { fail, type RequestEvent } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 import { setError, superValidate } from "sveltekit-superforms/server";
-import { zod } from "sveltekit-superforms/adapters";
+import { zod4 } from "sveltekit-superforms/adapters";
 import { userFullSchema } from "$lib/schemas/user/user";
 import { returnMessageIfServerError } from "$lib/server/utils";
 import { changePassword } from "$lib/server/user/functions";
@@ -14,14 +13,14 @@ let LL: TranslationFunctions;
 
 export const load: PageServerLoad = async (event: RequestEvent) => {
   LL = event.locals.LL;
-  const form = await superValidate(event.locals.user, zod(userFullSchema));
-  const changePasswordForm = await superValidate(zod(changePasswordSchema));
+  const form = await superValidate(event.locals.user, zod4(userFullSchema));
+  const changePasswordForm = await superValidate(zod4(changePasswordSchema));
   return { form, changePasswordForm };
 };
 
 export const actions = {
   changePassword: async (event: RequestEvent) => {
-    const form = await superValidate(event.request, zod(changePasswordSchema));
+    const form = await superValidate(event.request, zod4(changePasswordSchema));
     if (!form.valid) {
       return fail(400, { form });
     }

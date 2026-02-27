@@ -1,6 +1,6 @@
 <script lang="ts">
   import { superForm } from "sveltekit-superforms/client";
-  import { zod } from "sveltekit-superforms/adapters";
+  import { zod4 } from "sveltekit-superforms/adapters";
 
   import * as utils from "$lib/utils";
   import LL from "$i18n/i18n-svelte";
@@ -16,7 +16,7 @@
   let { data } = $props();
 
   const { form, errors, message, tainted, isTainted, enhance } = superForm(data.form, {
-    validators: zod(userFullSchema),
+    validators: zod4(userFullSchema),
     resetForm: false,
   });
   const {
@@ -25,7 +25,7 @@
     enhance: changePasswordEnhance,
     message: changePasswordMessage,
   } = superForm(data.changePasswordForm, {
-    validators: zod(changePasswordSchema),
+    validators: zod4(changePasswordSchema),
     resetForm: false,
   });
   type ExcludePublicKeys<T extends string> = T extends `${infer Prefix}_public` ? never : T;
@@ -84,8 +84,7 @@
       <div class="flex items-start gap-2">
         <p class="fieldset-label flex-1 {$errors[field.fieldKey] ? 'text-error' : ''}">
           {#if $errors[field.fieldKey]}
-            {#each $errors[field.fieldKey] || [] as error}
-              <!-- “|| []” 用于规避 svelte 语言服务器的报错 -->
+            {#each $errors[field.fieldKey] as error}
               {utils.getValidationTranslatedStringByKey($LL, error, field.fieldKey, "user")}<br />
             {/each}
           {:else if ($tainted === undefined || !isTainted($tainted[field.fieldKey])) && ((field.fieldKey === "email" && !$form.is_email_verified) || (field.fieldKey === "phone_no" && !$form.is_phone_verified))}
@@ -139,8 +138,7 @@
       />
       <p class="fieldset-label {$changePasswordErrors[fieldKey] ? 'text-error' : ''}">
         {#if $changePasswordErrors[fieldKey]}
-          {#each $changePasswordErrors[fieldKey] || [] as error}
-            <!-- “|| []” 用于规避 svelte 语言服务器的报错 -->
+          {#each $changePasswordErrors[fieldKey] as error}
             {utils.getValidationTranslatedStringByKey($LL, error, fieldKey, "user")}<br />
           {/each}
         {:else}

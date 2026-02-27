@@ -1,7 +1,6 @@
 import { type Actions, fail, redirect, type RequestEvent } from "@sveltejs/kit";
 import { message, setError, superValidate } from "sveltekit-superforms/server";
-import { zod } from "sveltekit-superforms/adapters";
-import { AxiosError } from "axios";
+import { zod4 } from "sveltekit-superforms/adapters";
 import type { PageServerLoad } from "./$types";
 import type { TranslationFunctions } from "$i18n/i18n-types";
 
@@ -17,13 +16,13 @@ export const load: PageServerLoad = async (event: RequestEvent) => {
     throw redirect(302, `/user/${event.locals.user.id}`);
   }
   LL = event.locals.LL;
-  const form = await superValidate(zod(registerSchema));
+  const form = await superValidate(zod4(registerSchema));
   return { form };
 };
 
 export const actions: Actions = {
   default: async (event) => {
-    const form = await superValidate(event.request, zod(registerSchema));
+    const form = await superValidate(event.request, zod4(registerSchema));
     if (!form.valid) {
       return fail(400, { form });
     }

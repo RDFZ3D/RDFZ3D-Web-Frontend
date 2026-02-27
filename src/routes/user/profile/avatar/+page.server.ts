@@ -1,6 +1,6 @@
 import { type Actions, fail, type RequestEvent } from "@sveltejs/kit";
 import { setError, superValidate, withFiles } from "sveltekit-superforms/server";
-import { zod } from "sveltekit-superforms/adapters";
+import { zod4 } from "sveltekit-superforms/adapters";
 import type { PageServerLoad } from "./$types";
 import type { TranslationFunctions } from "$i18n/i18n-types";
 
@@ -13,7 +13,7 @@ let LL: TranslationFunctions;
 
 export const load: PageServerLoad = async (event: RequestEvent) => {
   LL = event.locals.LL;
-  const form = await superValidate({}, zod(changeAvatarSchema));
+  const form = await superValidate({}, zod4(changeAvatarSchema));
   return { form };
 };
 
@@ -28,7 +28,7 @@ export const actions: Actions = {
       {
         avatar_file: formData.get("avatar_file") as File,
       },
-      zod(changeAvatarSchema),
+      zod4(changeAvatarSchema),
     );
 
     if (!form.valid) {
