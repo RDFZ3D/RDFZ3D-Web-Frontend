@@ -6,7 +6,7 @@ import type { PageServerLoad } from "./$types";
 import type { TranslationFunctions } from "$i18n/i18n-types";
 
 import { CommonErrorWithStatus, ServerError, ValidationError } from "$lib/server/errors";
-import { userFullSchema, type UserFullSchemaKey } from "$lib/schemas/user/user";
+import { userFullSchema, type UserFullSchemaKey, userPatchSchema } from "$lib/schemas/user/user";
 import { patchMe } from "$lib/server/user/functions";
 import { returnMessageIfServerError } from "$lib/server/utils";
 
@@ -20,7 +20,7 @@ export const load: PageServerLoad = async (event: RequestEvent) => {
 
 export const actions: Actions = {
   default: async (event) => {
-    const form = await superValidate(event.request, zod4(userFullSchema));
+    const form = await superValidate(event.request, zod4(userPatchSchema));
     if (!form.valid) {
       return fail(400, { form });
     }
@@ -35,7 +35,7 @@ export const actions: Actions = {
         e.status === 400 &&
         e.detail?.code === "USER_ALREADY_EXISTS"
       ) {
-        return setError(form, e.detail.identifier as UserFullSchemaKey, "|:user_exists");
+        return setError(form, e.detail.identifier, "|:user_exists");
       } else if (e instanceof ValidationError && e.detail[0].loc[1] === "phone_no") {
         return setError(form, "phone_no", "|:field_invalid");
       }

@@ -146,6 +146,9 @@
           </p>
           {#if Object.keys(userWritableSchema.shape).includes(`${field.fieldKey}_public`)}
             <label>
+              <!-- Workaround: 为了让 page.server.ts 中使用 userPatchSchema 的时候也能正常工作-->
+              <!-- html 的机制不会 post 不选的 checkbox，因此需要手动添加 false。由于 checkbox 顺序在后，选中后会覆盖这个 false-->
+              <input type="hidden" name="{field.fieldKey}_public" value={false} />
               <input
                 type="checkbox"
                 class="checkbox"

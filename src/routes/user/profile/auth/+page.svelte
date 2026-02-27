@@ -31,25 +31,6 @@
   type ExcludePublicKeys<T extends string> = T extends `${infer Prefix}_public` ? never : T;
 
   const changePasswordFieldKeys = ["old_password", "new_password"] as const;
-  // const fieldsets: FormInfo<
-  //   Exclude<keyof TranslationFunctions["user"]["functions"]["profile"], "title">,
-  //   Exclude<ExcludePublicKeys<UserWritableSchemaKey>, "avatar_file">
-  // > = [
-  //   {
-  //     title: "info",
-  //     fields: [
-  //       { fieldKey: "nickname" },
-  //       { fieldKey: "real_name" },
-  //       { fieldKey: "gender" },
-  //       { fieldKey: "birthday" },
-  //       { fieldKey: "identity" },
-  //     ],
-  //   },
-  //   {
-  //     title: "auth_info",
-  //     fields: [{ fieldKey: "username" }, { fieldKey: "email" }, { fieldKey: "phone_no" }],
-  //   },
-  // ];
   const mainFields: FormFieldsetInfo<"username" | "email" | "phone_no"> = [
     { fieldKey: "username" },
     { fieldKey: "email" },
@@ -65,6 +46,7 @@
   };
 </script>
 
+<!-- 逻辑重复，直接post到../info -->
 <form method="POST" action="info" use:enhance>
   <fieldset class="fieldset bg-base-200 rounded-box mb-6 p-4">
     <legend class="fieldset-legend">{$LL.user.functions.profile.auth_info.title()}</legend>
@@ -95,6 +77,8 @@
         </p>
         {#if Object.keys(userWritableSchema.shape).includes(`${field.fieldKey}_public`)}
           <label>
+            <!-- 见 ../info/+page.svelte -->
+            <input type="hidden" name="{field.fieldKey}_public" value={false} />
             <input
               type="checkbox"
               class="checkbox"

@@ -3,11 +3,13 @@ import { fail, type RequestEvent } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 import { setError, superValidate } from "sveltekit-superforms/server";
 import { zod4 } from "sveltekit-superforms/adapters";
-import { userFullSchema } from "$lib/schemas/user/user";
+import { userFullSchema, type UserFullSchemaKey, userPatchSchema } from "$lib/schemas/user/user";
 import { returnMessageIfServerError } from "$lib/server/utils";
-import { changePassword } from "$lib/server/user/functions";
-import { CommonErrorWithStatus, ErrorWithStatus } from "$lib/server/errors";
+import { changePassword, patchMe } from "$lib/server/user/functions";
+import { CommonErrorWithStatus, ErrorWithStatus, ValidationError } from "$lib/server/errors";
 import { changePasswordSchema } from "$lib/schemas/user/changePassword";
+
+import { actions as infoActions } from "../info/+page.server";
 
 let LL: TranslationFunctions;
 
