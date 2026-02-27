@@ -20,7 +20,7 @@
 </script>
 
 <div
-  class="flex min-h-[calc(100vh_-_64px)] flex-col items-center justify-center bg-cover bg-center text-center"
+  class="flex min-h-[calc(100vh-64px)] flex-col items-center justify-center bg-cover bg-center text-center"
   style="background-image: url({isMobile ? '/bg-mobile.png' : '/bg.png'});"
 >
   <div
@@ -34,9 +34,7 @@
       {$LL.descriptions.index()}
     </p>
     <div class="mb-6 flex gap-4">
-      <a class="btn btn-primary btn-lg shadow-lg" href="/download" target="_blank"
-        >{$LL.common.download()}</a
-      >
+      <a class="btn btn-primary btn-lg shadow-lg" href="/download">{$LL.common.download()}</a>
     </div>
     <div class="flex w-full justify-center">
       <a href="/user/login" class="link link-hover opacity-70">
