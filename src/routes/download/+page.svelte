@@ -51,7 +51,11 @@
             <div class="font-bold">
               {$LL.download.suggested_by_platform()}
             </div>
-            <a href={validDetectedPlatform.downloadUrl} class="btn btn-primary mt-2 w-full">
+            <a
+              href={validDetectedPlatform.downloadUrl}
+              class="btn btn-primary mt-2 w-full"
+              target="_blank"
+            >
               {$LL.download.download_version({ platform: validDetectedPlatform.name })}
             </a>
           </div>
@@ -71,7 +75,11 @@
                   <div class="flex items-center gap-4">
                     <i class={`text-xl ${platform.icon}`}></i>
                     <span class="font-medium">{platform.name}</span>
-                    <a href={platform.downloadUrl} class="btn btn-outline btn-sm ml-auto">
+                    <a
+                      href={platform.downloadUrl}
+                      class="btn btn-outline btn-sm ml-auto"
+                      target="_blank"
+                    >
                       {$LL.common.download()}
                     </a>
                   </div>
